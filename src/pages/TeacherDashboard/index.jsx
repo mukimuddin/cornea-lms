@@ -17,8 +17,8 @@ function TeacherDashboard() {
   return (
     <div className={`flex h-screen bg-gray-100 dark:bg-gray-900`}>
       {/* Sidebar */}
-      <aside className="w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-md p-4">
-        <h2 className="text-xl font-bold mb-6">Teacher Dashboard</h2>
+      <aside className="w-full md:w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-md p-4">
+        <h2 className="text-lg md:text-xl font-bold mb-6">Teacher Dashboard</h2>
         <nav className="space-y-4">
           <Link to="/teacher-dashboard/manage-homework" className="block hover:text-red-500">
             Manage Homework
@@ -51,8 +51,8 @@ function TeacherDashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto p-6">
-        <Outlet /> {/* Render child routes like Daily Routine here */}
+      <main className="flex-1 overflow-y-auto p-4 md:p-6">
+        <Outlet /> {/* Render child routes here */}
       </main>
     </div>
   );

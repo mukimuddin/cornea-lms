@@ -39,9 +39,9 @@ function Homepage() {
     <div className="bg-gray-100 min-h-screen flex flex-col items-center">
       {/* Navbar */}
       <header className="w-full bg-white shadow-md py-4">
-        <div className="container mx-auto flex justify-between items-center px-4">
-          <h1 className="text-2xl font-bold text-red-500">Bolod Coaching Center</h1>
-          <nav className="relative">
+        <div className="container mx-auto flex justify-between items-center px-4 flex-wrap">
+          <h1 className="text-xl md:text-2xl font-bold text-red-500">Bolod Coaching Center</h1>
+          <nav className="relative mt-2 md:mt-0">
             <button
               onClick={toggleDropdown}
               onKeyDown={handleKeyDown}
@@ -80,13 +80,13 @@ function Homepage() {
 
       {/* Hero Section */}
       <main className="flex-1 flex flex-col justify-center items-center text-center px-4">
-        <h2 className="text-4xl font-bold text-gray-800 mb-4">
+        <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
           Welcome to Cornea Coaching Center
         </h2>
-        <p className="text-lg text-gray-600 mb-6">
+        <p className="text-sm md:text-lg text-gray-600 mb-6">
           Your one-stop solution for academic excellence.
         </p>
-        <div className="space-x-4">
+        <div className="space-y-4 md:space-x-4 md:space-y-0 flex flex-col md:flex-row">
           <Link
             to="/student-login"
             className="bg-red-500 text-white px-6 py-3 rounded-lg shadow hover:bg-red-600"
