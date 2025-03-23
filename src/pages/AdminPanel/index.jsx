@@ -74,7 +74,7 @@ function AdminPanel() {
                 onClick={() => handleRemoveController(controller.id)}
                 className="mt-2 bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800"
               >
-                Remove
+                Remove Now
               </button>
             </li>
           ))}

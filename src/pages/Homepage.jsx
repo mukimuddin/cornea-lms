@@ -40,7 +40,7 @@ function Homepage() {
       {/* Navbar */}
       <header className="w-full bg-white shadow-md py-4">
         <div className="container mx-auto flex justify-between items-center px-4">
-          <h1 className="text-2xl font-bold text-red-500">Cornea Coaching Center</h1>
+          <h1 className="text-2xl font-bold text-red-500">Mukim Coaching Center</h1>
           <nav className="relative">
             <button
               onClick={toggleDropdown}
