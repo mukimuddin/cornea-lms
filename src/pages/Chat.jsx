@@ -30,36 +30,26 @@ function Chat() {
 
   const [activeConversation, setActiveConversation] = useState(null);
   const [newMessage, setNewMessage] = useState('');
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar state
   const sidebarRef = useRef(null);
   const navigate = useNavigate();
 
   const handleConversationClick = (id) => {
     setActiveConversation(id);
     setNewMessage('');
-    setMessages((prevMessages) => ({
-      ...prevMessages,
-      [id]: prevMessages[id].map((msg) => ({ ...msg, status: 'Read' })),
-    }));
-    setSidebarOpen(false); // Close sidebar on conversation selection
   };
 
   const handleOutsideClick = (event) => {
     if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-      setSidebarOpen(false);
+      setActiveConversation(null); // Close the chat view on outside click
     }
   };
 
   useEffect(() => {
-    if (sidebarOpen) {
-      document.addEventListener('mousedown', handleOutsideClick);
-    } else {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    }
+    document.addEventListener('mousedown', handleOutsideClick);
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [sidebarOpen]);
+  }, []);
 
   const handleSendMessage = () => {
     if (newMessage.trim() === '') return;
@@ -80,64 +70,73 @@ function Chat() {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <aside
-        ref={sidebarRef}
-        className={`fixed md:static top-0 left-0 z-40 w-64 bg-white shadow-md p-4 transform ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } transition-transform duration-300 md:translate-x-0`}
-      >
-        <button
-          onClick={() => setSidebarOpen(false)}
-          className="md:hidden text-gray-800 mb-4"
+      {!activeConversation && (
+        <aside
+          ref={sidebarRef}
+          className="w-full md:w-1/3 lg:w-1/4 bg-white shadow-md p-4 overflow-y-auto"
         >
-          Close
-        </button>
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Conversations</h2>
-        <ul className="space-y-2">
-          {conversations.map((conversation) => (
-            <li
-              key={conversation.id}
-              onClick={() => handleConversationClick(conversation.id)}
-              className={`p-3 rounded-lg cursor-pointer ${
-                activeConversation === conversation.id ? 'bg-red-500 text-white' : 'hover:bg-gray-200'
-              }`}
-            >
-              <div className="flex justify-between items-center">
-                <span>{conversation.name}</span>
-                {conversation.unread && <span className="text-xs text-red-500">Unread</span>}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </aside>
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Conversations</h2>
+          <ul className="space-y-2">
+            {conversations.map((conversation) => (
+              <li
+                key={conversation.id}
+                onClick={() => handleConversationClick(conversation.id)}
+                className="p-3 rounded-lg cursor-pointer hover:bg-gray-200"
+              >
+                <div className="flex justify-between items-center">
+                  <span>{conversation.name}</span>
+                  {conversation.unread && <span className="text-xs text-red-500">Unread</span>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
 
       {/* Main Chat Area */}
-      <main className="flex-1 flex flex-col bg-white shadow-md rounded-lg p-6">
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="md:hidden bg-red-500 text-white px-4 py-2 rounded-lg mb-4"
-        >
-          Open Menu
-        </button>
-        {activeConversation ? (
-          <>
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      {activeConversation && (
+        <main className="flex-1 flex flex-col bg-white shadow-md rounded-lg">
+          {/* Header */}
+          <div className="flex items-center justify-between bg-gray-100 p-4 border-b">
+            <button
+              onClick={() => setActiveConversation(null)}
+              className="text-gray-800 bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300"
+            >
+              Back
+            </button>
+            <h2 className="text-xl font-bold text-gray-800">
               {conversations.find((c) => c.id === activeConversation)?.name || 'Chat'}
             </h2>
-            <div className="flex-1 overflow-y-auto border rounded-lg p-4 bg-gray-50">
-              {(messages[activeConversation] || []).map((message, index) => (
-                <div key={index} className="mb-4">
-                  <p className="text-sm text-gray-600">
-                    <span className="font-bold">{message.sender}</span> at {message.timestamp}
-                  </p>
-                  <p className="text-gray-800">{message.content}</p>
-                  <p className="text-xs text-gray-500">Status: {message.status}</p>
-                </div>
-              ))}
-            </div>
+          </div>
 
-            {/* Message Input */}
-            <div className="mt-4 flex items-center space-x-4">
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-4">
+            {(messages[activeConversation] || []).map((message, index) => (
+              <div
+                key={index}
+                className={`mb-4 ${
+                  message.sender === 'You' ? 'text-right' : 'text-left'
+                }`}
+              >
+                <p className="text-sm text-gray-600">
+                  <span className="font-bold">{message.sender}</span> at {message.timestamp}
+                </p>
+                <p
+                  className={`inline-block px-4 py-2 rounded-lg ${
+                    message.sender === 'You'
+                      ? 'bg-red-500 text-white'
+                      : 'bg-gray-200 text-gray-800'
+                  }`}
+                >
+                  {message.content}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Message Input */}
+          <div className="p-4 border-t">
+            <div className="flex items-center space-x-4">
               <input
                 type="text"
                 value={newMessage}
@@ -152,13 +151,9 @@ function Chat() {
                 Send
               </button>
             </div>
-          </>
-        ) : (
-          <div className="flex items-center justify-center h-full">
-            <p className="text-gray-600">Select a conversation to start chatting.</p>
           </div>
-        )}
-      </main>
+        </main>
+      )}
     </div>
   );
 }
