@@ -75,7 +75,15 @@ function Chat() {
           ref={sidebarRef}
           className="w-full md:w-1/3 lg:w-1/4 bg-white shadow-md p-4 overflow-y-auto"
         >
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Conversations</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold text-gray-800">Conversations</h2>
+            <button
+              onClick={() => navigate('/student-dashboard')}
+              className="text-gray-800 bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300"
+            >
+              Back
+            </button>
+          </div>
           <ul className="space-y-2">
             {conversations.map((conversation) => (
               <li
@@ -98,15 +106,15 @@ function Chat() {
         <main className="flex-1 flex flex-col bg-white shadow-md rounded-lg">
           {/* Header */}
           <div className="flex items-center justify-between bg-gray-100 p-4 border-b">
+            <h2 className="text-xl font-bold text-gray-800">
+              {conversations.find((c) => c.id === activeConversation)?.name || 'Chat'}
+            </h2>
             <button
               onClick={() => setActiveConversation(null)}
               className="text-gray-800 bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300"
             >
               Back
             </button>
-            <h2 className="text-xl font-bold text-gray-800">
-              {conversations.find((c) => c.id === activeConversation)?.name || 'Chat'}
-            </h2>
           </div>
 
           {/* Messages */}
@@ -135,7 +143,7 @@ function Chat() {
           </div>
 
           {/* Message Input */}
-          <div className="p-4 border-t">
+          <div className="p-4 border-t sticky bottom-0 bg-white">
             <div className="flex items-center space-x-4">
               <input
                 type="text"
