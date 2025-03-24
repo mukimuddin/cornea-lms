@@ -103,9 +103,9 @@ function Chat() {
 
       {/* Main Chat Area */}
       {activeConversation && (
-        <main className="flex-1 flex flex-col bg-white shadow-md rounded-lg">
+        <main className="flex flex-col h-screen bg-white shadow-md rounded-lg">
           {/* Header */}
-          <div className="flex items-center justify-between bg-gray-100 p-4 border-b">
+          <div className="flex items-center justify-between bg-gray-100 p-4 border-b sticky top-0 z-10">
             <h2 className="text-xl font-bold text-gray-800">
               {conversations.find((c) => c.id === activeConversation)?.name || 'Chat'}
             </h2>
