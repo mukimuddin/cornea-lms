@@ -143,7 +143,7 @@ function Chat() {
           </div>
 
           {/* Message Input */}
-          <div className="p-4 border-t sticky bottom-0 bg-white">
+          <div className="p-4 border-t sticky bottom-2 bg-white">
             <div className="flex items-center space-x-4">
               <input
                 type="text"
