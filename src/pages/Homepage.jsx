@@ -85,7 +85,7 @@ function Homepage() {
                   Teacher Login
                 </Link>
                 <Link
-                  to="/admin-panel"
+                  to="/admin-login"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-red-500"
                 >
                   Admin Login

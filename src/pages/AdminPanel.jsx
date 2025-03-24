@@ -26,6 +26,9 @@ function AdminPanel() {
           <Link to="/admin-panel/settings" className="block hover:text-red-500">
             Settings
           </Link>
+          <Link to="/admin-panel/manage-admins" className="block hover:text-red-500">
+            Manage Admins
+          </Link>
         </nav>
       </aside>
 

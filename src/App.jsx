@@ -23,13 +23,26 @@ import Courses from './pages/AdminPanel/Courses';
 import Reports from './pages/AdminPanel/Reports';
 import Settings from './pages/AdminPanel/Settings';
 import ManageAdmins from './pages/AdminPanel/ManageAdmins';
+import AdminLogin from './pages/AdminLogin';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    const fetchdata = async () => {
+      const response = await fetch("http://localhost:5000/");
+      const data = await response.json();
+      console.log(data);
+    }
+    fetchdata();
+  }, []);
+  
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/student-login" element={<StudentLogin />} /> {/* Add login route */}
+        <Route path="/teacher-login" element={<TeacherLogin />} /> {/* Add Teacher Login route */}
+        <Route path="/admin-login" element={<AdminLogin />} /> {/* Add Admin Login route */}
         <Route path="/student-dashboard/*" element={<StudentDashboard />}>
           <Route index element={<Profile />} /> {/* Default route */}
           <Route path="profile" element={<Profile />} />
@@ -54,7 +67,6 @@ function App() {
           <Route path="daily-routine" element={<TeacherDailyRoutine />} /> {/* Nested Teacher Routine route */}
           <Route path="submit-results" element={<SubmitResults />} /> {/* Add Submit Results route */}
         </Route>
-        <Route path="/teacher-login" element={<TeacherLogin />} /> {/* Add Teacher Login route */}
       </Routes>
     </Router>
   )
