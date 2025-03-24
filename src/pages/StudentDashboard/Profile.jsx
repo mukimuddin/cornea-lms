@@ -37,28 +37,28 @@ function Profile() {
   ];
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Student Profile</h1>
+    <div className="bg-white shadow-md rounded-lg p-4 md:p-6">
+      <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">Student Profile</h1>
       <div className="space-y-4">
         {Object.entries(profile).map(([key, value]) => (
-          <div key={key} className="flex items-start">
-            <span className="w-48 font-medium text-gray-700 capitalize">
+          <div key={key} className="flex flex-col md:flex-row items-start">
+            <span className="w-full md:w-48 font-medium text-gray-700 capitalize text-sm md:text-base">
               {key.replace(/([A-Z])/g, ' $1')}:
             </span>
-            <span className="text-gray-900">{value}</span>
+            <span className="text-gray-900 text-sm md:text-base">{value}</span>
           </div>
         ))}
       </div>
-      <div className="mt-6">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Results</h2>
+      <div className="mt-4 md:mt-6">
+        <h2 className="text-xl md:text-2xl font-bold mb-4 text-gray-800">Results</h2>
         <ul className="space-y-4">
           {results.map((result, index) => (
             <li key={index} className="p-4 border rounded-lg shadow-sm">
               <h3 className="text-lg font-bold text-gray-800">{result.subject}</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-sm md:text-base">
                 Marks: {result.marks}/{result.totalMarks}
               </p>
-              <p className="text-gray-600">Grade: {result.grade}</p>
+              <p className="text-gray-600 text-sm md:text-base">Grade: {result.grade}</p>
             </li>
           ))}
         </ul>

@@ -60,13 +60,13 @@ function StudentDashboard() {
         </nav>
         <button
           onClick={toggleDarkMode}
-          className="mt-6 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+          className="mt-6 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 text-sm md:text-base"
         >
           Toggle {darkMode ? 'Light' : 'Dark'} Mode
         </button>
         <button
           onClick={handleLogout}
-          className="mt-4 w-full bg-gray-700 text-white py-2 rounded-lg hover:bg-gray-800"
+          className="mt-4 w-full bg-gray-700 text-white py-2 rounded-lg hover:bg-gray-800 text-sm md:text-base"
         >
           Logout
         </button>
