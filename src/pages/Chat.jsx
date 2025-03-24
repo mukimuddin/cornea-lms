@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Picker from 'emoji-picker-react';
 
 function Chat() {
   const [conversations] = useState([
@@ -30,6 +31,7 @@ function Chat() {
 
   const [activeConversation, setActiveConversation] = useState(null);
   const [newMessage, setNewMessage] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const sidebarRef = useRef(null);
   const navigate = useNavigate();
 
@@ -65,6 +67,10 @@ function Chat() {
     }));
 
     setNewMessage('');
+  };
+
+  const handleEmojiClick = (event, emojiObject) => {
+    setNewMessage((prev) => prev + emojiObject.emoji);
   };
 
   return (
@@ -145,6 +151,17 @@ function Chat() {
           {/* Message Input */}
           <div className="sticky bottom-0 bg-white p-4 border-t">
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                😊
+              </button>
+              {showEmojiPicker && (
+                <div className="absolute bottom-16 left-4 z-50">
+                  <Picker onEmojiClick={handleEmojiClick} />
+                </div>
+              )}
               <input
                 type="text"
                 value={newMessage}
