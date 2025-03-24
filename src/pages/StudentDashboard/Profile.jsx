@@ -31,11 +31,6 @@ function Profile() {
     transport: 'Bus Route 5',
   };
 
-  const results = [
-    { subject: 'Math', marks: 85, totalMarks: 100, grade: 'A' },
-    { subject: 'Physics', marks: 78, totalMarks: 100, grade: 'B+' },
-  ];
-
   return (
     <div className="bg-white shadow-md rounded-lg p-4 md:p-6">
       <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">Student Profile</h1>
@@ -48,20 +43,6 @@ function Profile() {
             <span className="text-gray-900 text-sm md:text-base">{value}</span>
           </div>
         ))}
-      </div>
-      <div className="mt-4 md:mt-6">
-        <h2 className="text-xl md:text-2xl font-bold mb-4 text-gray-800">Results</h2>
-        <ul className="space-y-4">
-          {results.map((result, index) => (
-            <li key={index} className="p-4 border rounded-lg shadow-sm">
-              <h3 className="text-lg font-bold text-gray-800">{result.subject}</h3>
-              <p className="text-gray-600 text-sm md:text-base">
-                Marks: {result.marks}/{result.totalMarks}
-              </p>
-              <p className="text-gray-600 text-sm md:text-base">Grade: {result.grade}</p>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
