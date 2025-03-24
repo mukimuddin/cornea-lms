@@ -109,7 +109,7 @@ function Chat() {
 
       {/* Main Chat Area */}
       {activeConversation && (
-        <main className="flex flex-col h-screen bg-white shadow-md rounded-lg">
+        <main className="flex flex-col h-screen w-full bg-white shadow-md rounded-lg">
           {/* Header */}
           <div className="flex items-center justify-between bg-gray-100 p-4 border-b sticky top-0 z-10">
             <h2 className="text-xl font-bold text-gray-800">
@@ -159,7 +159,7 @@ function Chat() {
               </button>
               {showEmojiPicker && (
                 <div className="absolute bottom-16 left-0 z-50">
-                  <Picker onEmojiClick={(e, emojiObject) => handleEmojiClick(emojiObject)} />
+                  <Picker onEmojiClick={(emojiObject) => handleEmojiClick(emojiObject)} />
                 </div>
               )}
               <input
