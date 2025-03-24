@@ -1,10 +1,11 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 function StudentDashboard() {
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false); // State for toggling sidebar
   const [notification, setNotification] = useState({ message: '', type: '', visible: false });
+  const sidebarRef = useRef(null);
   const navigate = useNavigate();
 
   const toggleDarkMode = () => {
@@ -19,6 +20,23 @@ function StudentDashboard() {
       setTimeout(() => navigate('/student-login'), 500);
     }, 2000);
   };
+
+  const handleOutsideClick = (event) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      setSidebarOpen(false); // Close the sidebar on outside click
+    }
+  };
+
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [sidebarOpen]);
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900 relative">
@@ -35,16 +53,11 @@ function StudentDashboard() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:static top-0 left-0 z-40 w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-md p-4 transform ${
+        ref={sidebarRef}
+        className={`fixed md:static top-0 left-0 z-40 w-64 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-100 shadow-md p-4 transform ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 md:translate-x-0`}
       >
-        <button
-          onClick={() => setSidebarOpen(false)}
-          className="md:hidden text-gray-800 dark:text-gray-100 mb-4"
-        >
-          Close
-        </button>
         <h2 className="text-lg md:text-xl font-bold mb-6">Student Dashboard</h2>
         <nav className="space-y-4">
           <Link to="/student-dashboard/profile" className="block hover:text-red-500">
