@@ -109,7 +109,7 @@ function Chat() {
 
       {/* Main Chat Area */}
       {activeConversation && (
-        <main className="flex flex-col h-screen w-full bg-white shadow-md rounded-lg">
+        <main className="flex flex-col h-screen w-full max-w-screen-md mx-auto bg-white shadow-md rounded-lg">
           {/* Header */}
           <div className="flex items-center justify-between bg-gray-100 p-4 border-b sticky top-0 z-10">
             <h2 className="text-xl font-bold text-gray-800">
@@ -150,7 +150,7 @@ function Chat() {
 
           {/* Message Input */}
           <div className="sticky bottom-0 bg-white p-4 border-t">
-            <div className="flex items-center space-x-4 relative w-full">
+            <div className="flex items-center space-x-2 w-full">
               <button
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 className="text-gray-500 hover:text-gray-700"
@@ -171,7 +171,7 @@ function Chat() {
               />
               <button
                 onClick={handleSendMessage}
-                className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600"
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
               >
                 Send
               </button>
