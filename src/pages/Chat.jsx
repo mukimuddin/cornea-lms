@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Chat() {
@@ -28,24 +28,38 @@ function Chat() {
     ],
   });
 
-  const [activeConversation, setActiveConversation] = useState(null); // Default: no conversation selected
+  const [activeConversation, setActiveConversation] = useState(null);
   const [newMessage, setNewMessage] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar state
+  const sidebarRef = useRef(null);
   const navigate = useNavigate();
 
   const handleConversationClick = (id) => {
     setActiveConversation(id);
-    setNewMessage(''); // Clear the input when switching conversations
-
-    // Mark the conversation as read
+    setNewMessage('');
     setMessages((prevMessages) => ({
       ...prevMessages,
       [id]: prevMessages[id].map((msg) => ({ ...msg, status: 'Read' })),
     }));
+    setSidebarOpen(false); // Close sidebar on conversation selection
   };
 
-  const handleBackToDashboard = () => {
-    navigate('/student-dashboard'); // Navigate back to the Student Dashboard
+  const handleOutsideClick = (event) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      setSidebarOpen(false);
+    }
   };
+
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [sidebarOpen]);
 
   const handleSendMessage = () => {
     if (newMessage.trim() === '') return;
@@ -66,16 +80,19 @@ function Chat() {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <aside className="w-1/4 bg-white shadow-md p-4 overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800">Conversations</h2>
-          <button
-            onClick={handleBackToDashboard}
-            className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"
-          >
-            Back to Dashboard
-          </button>
-        </div>
+      <aside
+        ref={sidebarRef}
+        className={`fixed md:static top-0 left-0 z-40 w-64 bg-white shadow-md p-4 transform ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } transition-transform duration-300 md:translate-x-0`}
+      >
+        <button
+          onClick={() => setSidebarOpen(false)}
+          className="md:hidden text-gray-800 mb-4"
+        >
+          Close
+        </button>
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Conversations</h2>
         <ul className="space-y-2">
           {conversations.map((conversation) => (
             <li
@@ -96,6 +113,12 @@ function Chat() {
 
       {/* Main Chat Area */}
       <main className="flex-1 flex flex-col bg-white shadow-md rounded-lg p-6">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="md:hidden bg-red-500 text-white px-4 py-2 rounded-lg mb-4"
+        >
+          Open Menu
+        </button>
         {activeConversation ? (
           <>
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
