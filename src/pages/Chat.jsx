@@ -69,7 +69,7 @@ function Chat() {
     setNewMessage('');
   };
 
-  const handleEmojiClick = (event, emojiObject) => {
+  const handleEmojiClick = (emojiObject) => {
     setNewMessage((prev) => prev + emojiObject.emoji);
   };
 
@@ -150,7 +150,7 @@ function Chat() {
 
           {/* Message Input */}
           <div className="sticky bottom-0 bg-white p-4 border-t">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 relative">
               <button
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 className="text-gray-500 hover:text-gray-700"
@@ -158,8 +158,8 @@ function Chat() {
                 😊
               </button>
               {showEmojiPicker && (
-                <div className="absolute bottom-16 left-4 z-50">
-                  <Picker onEmojiClick={handleEmojiClick} />
+                <div className="absolute bottom-16 left-0 z-50">
+                  <Picker onEmojiClick={(e, emojiObject) => handleEmojiClick(emojiObject)} />
                 </div>
               )}
               <input
