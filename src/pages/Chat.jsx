@@ -53,7 +53,8 @@ function Chat() {
     };
   }, []);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (e) => {
+    e.preventDefault(); // Prevent form submission behavior
     if (newMessage.trim() === '') return;
 
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -151,8 +152,9 @@ function Chat() {
 
           {/* Message Input */}
           <div className="sticky bottom-0 bg-white p-4 border-t">
-            <div className="flex items-center space-x-2 w-full">
+            <form onSubmit={handleSendMessage} className="flex items-center space-x-2 w-full">
               <button
+                type="button"
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 className="text-gray-500 hover:text-gray-700"
               >
@@ -171,12 +173,12 @@ function Chat() {
                 className="flex-1 px-4 py-2 border rounded-lg"
               />
               <button
-                onClick={handleSendMessage}
+                type="submit"
                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
               >
                 Send
               </button>
-            </div>
+            </form>
           </div>
         </main>
       )}
