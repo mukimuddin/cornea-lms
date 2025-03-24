@@ -3,7 +3,8 @@ import { useState } from 'react';
 
 function StudentDashboard() {
   const [darkMode, setDarkMode] = useState(false);
-  const [notification, setNotification] = useState({ message: '', type: '', visible: false }); // Notification state
+  const [sidebarOpen, setSidebarOpen] = useState(false); // State for toggling sidebar
+  const [notification, setNotification] = useState({ message: '', type: '', visible: false });
   const navigate = useNavigate();
 
   const toggleDarkMode = () => {
@@ -14,13 +15,13 @@ function StudentDashboard() {
   const handleLogout = () => {
     setNotification({ message: 'Logout successful!', type: 'success', visible: true });
     setTimeout(() => {
-      setNotification((prev) => ({ ...prev, visible: false })); // Fade out
-      setTimeout(() => navigate('/student-login'), 500); // Redirect after fade-out
+      setNotification((prev) => ({ ...prev, visible: false }));
+      setTimeout(() => navigate('/student-login'), 500);
     }, 2000);
   };
 
   return (
-    <div className={`flex h-screen bg-gray-100 dark:bg-gray-900 relative`}>
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900 relative">
       {/* Notification */}
       {notification.message && (
         <div
@@ -33,7 +34,17 @@ function StudentDashboard() {
       )}
 
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-md p-4">
+      <aside
+        className={`fixed md:static top-0 left-0 z-40 w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-md p-4 transform ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } transition-transform duration-300 md:translate-x-0`}
+      >
+        <button
+          onClick={() => setSidebarOpen(false)}
+          className="md:hidden text-gray-800 dark:text-gray-100 mb-4"
+        >
+          Close
+        </button>
         <h2 className="text-lg md:text-xl font-bold mb-6">Student Dashboard</h2>
         <nav className="space-y-4">
           <Link to="/student-dashboard/profile" className="block hover:text-red-500">
@@ -74,6 +85,12 @@ function StudentDashboard() {
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto p-4 md:p-6">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="md:hidden bg-red-500 text-white px-4 py-2 rounded-lg mb-4"
+        >
+          Open Menu
+        </button>
         <Outlet /> {/* Render child routes here */}
       </main>
     </div>
