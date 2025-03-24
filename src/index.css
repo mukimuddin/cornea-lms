@@ -3,3 +3,7 @@
 @tailwind utilities;
 
 /* Add custom responsive styles if needed */
+
+body {
+  @apply bg-gray-100;
+}

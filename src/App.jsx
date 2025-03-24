@@ -19,6 +19,13 @@ import TeacherLogin from './pages/TeacherLogin.jsx'; // Import TeacherLogin
 import TeacherDailyRoutine from './pages/TeacherDashboard/DailyRoutine.jsx'; // Import Teacher Routine
 import SubmitResults from './pages/TeacherDashboard/SubmitResults.jsx'; // Import Submit Results
 import ControllerPanel from './pages/ControllerPanel'; // Import Controller Panel
+import Dashboard from './pages/AdminPanel/Dashboard';
+import ManageStudents from './pages/AdminPanel/ManageStudents';
+import ManageTeachers from './pages/AdminPanel/ManageTeachers';
+import Courses from './pages/AdminPanel/Courses';
+import Reports from './pages/AdminPanel/Reports';
+import Settings from './pages/AdminPanel/Settings';
+import ManageAdmins from './pages/AdminPanel/ManageAdmins';
 
 function App() {
   return (
@@ -35,7 +42,15 @@ function App() {
           <Route path="payments" element={<Payments />} />
           <Route path="notifications" element={<Notifications />} />
         </Route>
-        <Route path="/admin-panel/*" element={<AdminPanel />} /> {/* Admin Panel */}
+        <Route path="/admin-panel/*" element={<AdminPanel />}> {/* Admin Panel */}
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="manage-students" element={<ManageStudents />} />
+          <Route path="manage-teachers" element={<ManageTeachers />} />
+          <Route path="manage-admins" element={<ManageAdmins />} />
+          <Route path="courses" element={<Courses />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
         <Route path="/controller-panel/*" element={<ControllerPanel />} /> {/* Controller Panel */}
         <Route path="/chat" element={<Chat />} /> {/* Add Chat route */}
         <Route path="/teacher-dashboard/*" element={<TeacherDashboard />}>
