@@ -71,6 +71,7 @@ function Chat() {
 
   const handleEmojiClick = (emojiObject) => {
     setNewMessage((prev) => prev + emojiObject.emoji);
+    setShowEmojiPicker(false); // Close the emoji picker after selecting an emoji
   };
 
   return (
