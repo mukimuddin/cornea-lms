@@ -232,6 +232,14 @@ function ManageStudents() {
             className="w-full px-4 py-2 border rounded-lg"
           />
           <input
+            type="email" // Add this input field for email
+            name="email"
+            placeholder="Email"
+            value={newStudent.email}
+            onChange={handleInputChange}
+            className="w-full px-4 py-2 border rounded-lg"
+          />
+          <input
             type="text"
             name="fatherName"
             placeholder="Father's Name"
