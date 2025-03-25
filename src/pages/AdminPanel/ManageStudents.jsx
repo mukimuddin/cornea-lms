@@ -41,8 +41,8 @@ function ManageStudents() {
         const response = await fetchStudents();
         setStudents(response.data);
       } catch (error) {
-        console.error('Error fetching students:', error);
-        alert('Failed to load students. Please try again.');
+        console.error('Error fetching students:', error.response || error.message);
+        alert(`Failed to load students: ${error.response?.data?.error || error.message}`);
       }
     };
     loadStudents();
@@ -124,8 +124,8 @@ function ManageStudents() {
       });
       alert('Student added successfully!');
     } catch (error) {
-      console.error('Error adding student:', error);
-      alert('Failed to add student. Please try again.');
+      console.error('Error adding student:', error.response || error.message);
+      alert(`Failed to add student: ${error.response?.data?.error || error.message}`);
     }
   };
 
