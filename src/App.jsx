@@ -25,7 +25,6 @@ import Reports from './pages/AdminPanel/Reports';
 import Settings from './pages/AdminPanel/Settings';
 import ManageAdmins from './pages/AdminPanel/ManageAdmins';
 import AdminLogin from './pages/AdminLogin';
-import SuperAdminProfile from './pages/AdminPanel/SuperAdminProfile';
 import AdminProfile from './pages/AdminPanel/AdminProfile';
 import SuperAdminSetup from './pages/SuperAdminSetup';
 import { useEffect } from 'react';
@@ -69,7 +68,6 @@ function App() {
           <Route path="courses" element={<Courses />} />
           <Route path="reports" element={<Reports />} />
           <Route path="settings" element={<Settings />} />
-          <Route path="super-admin-profile" element={<SuperAdminProfile />} />
           <Route path="admin-profile" element={<AdminProfile />} />
         </Route>
         <Route path="/controller-panel/*" element={<ControllerPanel />} />

@@ -36,10 +36,10 @@ function ManageStudents() {
   });
 
   useEffect(() => {
-    // Fetch students from the real-time database
+    // Fetch students from the backend
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('https://your-backend-service.onrender.com/students'); // Update URL
+        const response = await axios.get('/api/students'); // Correct API endpoint
         setStudents(response.data);
       } catch (error) {
         console.error('Error fetching students:', error);

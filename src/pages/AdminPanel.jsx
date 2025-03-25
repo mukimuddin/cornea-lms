@@ -54,9 +54,7 @@ function AdminPanel() {
           <Link to="/admin-panel/admin-profile" className="block hover:text-red-500">
             Admin Profile
           </Link>
-          <Link to="/admin-panel/super-admin-profile" className="block hover:text-red-500">
-            Super Admin Profile
-          </Link>
+          {/* Removed Super Admin Profile */}
           <button
             onClick={handleLogout}
             className="block w-full text-left text-red-500 hover:text-red-600 mt-4"

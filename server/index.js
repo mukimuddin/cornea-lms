@@ -39,6 +39,35 @@ app.post('/api/students', async (req, res) => {
   }
 });
 
+app.get('/api/students', async (req, res) => {
+  try {
+    const students = await StudentModel.find(); // Fetch all students
+    res.json(students);
+  } catch (error) {
+    console.error('Error fetching students:', error);
+    res.status(500).json({ error: 'Failed to fetch students' });
+  }
+});
+
+app.post('/api/admins', async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    // Check if the username already exists
+    const existingAdmin = await StudentModel.findOne({ username }); // Assuming admins are stored in the same collection
+    if (existingAdmin) {
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+
+    const newAdmin = new StudentModel(req.body); // Replace with AdminModel if admins are stored separately
+    const savedAdmin = await newAdmin.save();
+    res.status(201).json(savedAdmin);
+  } catch (error) {
+    console.error('Error adding admin:', error);
+    res.status(500).json({ error: 'Failed to add admin' });
+  }
+});
+
 // Fallback to index.html for React Router
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
