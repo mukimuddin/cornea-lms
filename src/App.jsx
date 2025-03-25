@@ -25,6 +25,7 @@ import Settings from './pages/AdminPanel/Settings';
 import ManageAdmins from './pages/AdminPanel/ManageAdmins';
 import AdminLogin from './pages/AdminLogin';
 import SuperAdminProfile from './pages/AdminPanel/SuperAdminProfile';
+import SuperAdminSetup from './pages/SuperAdminSetup';
 import { useEffect } from 'react';
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/teacher-login" element={<TeacherLogin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/super-admin-setup" element={<SuperAdminSetup />} />
         <Route path="/student-dashboard/*" element={<StudentDashboard />}>
           <Route index element={<Profile />} />
           <Route path="profile" element={<Profile />} />

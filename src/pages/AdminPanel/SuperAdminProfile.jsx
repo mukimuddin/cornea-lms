@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function SuperAdminProfile() {
   const [profile, setProfile] = useState({
@@ -13,17 +12,13 @@ function SuperAdminProfile() {
     additionalInfo: 'This is additional information about the Super Admin.',
   });
   const [isEditing, setIsEditing] = useState(false);
-  const [role, setRole] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const userRole = localStorage.getItem('role');
-    setRole(userRole);
-
-    if (!userRole) {
-      navigate('/admin-login'); // Redirect if no role is found
+    const storedRole = localStorage.getItem('role');
+    if (storedRole !== 'Admin') {
+      console.warn('Accessing as a non-superadmin user.');
     }
-  }, [navigate]);
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +26,6 @@ function SuperAdminProfile() {
   };
 
   const handleSave = () => {
-    // Save the updated profile (for now, just log it)
     console.log('Profile saved:', profile);
     setIsEditing(false);
   };
@@ -96,100 +90,90 @@ function SuperAdminProfile() {
         </div>
 
         {/* Address */}
-        {role === 'Super Admin' && (
-          <div>
-            <label className="font-medium text-gray-700">Address:</label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="address"
-                value={profile.address}
-                onChange={handleInputChange}
-                className="ml-2 px-2 py-1 border rounded-lg"
-              />
-            ) : (
-              <span className="ml-2 text-gray-900">{profile.address}</span>
-            )}
-          </div>
-        )}
+        <div>
+          <label className="font-medium text-gray-700">Address:</label>
+          {isEditing ? (
+            <input
+              type="text"
+              name="address"
+              value={profile.address}
+              onChange={handleInputChange}
+              className="ml-2 px-2 py-1 border rounded-lg"
+            />
+          ) : (
+            <span className="ml-2 text-gray-900">{profile.address}</span>
+          )}
+        </div>
 
         {/* Date of Birth */}
-        {role === 'Super Admin' && (
-          <div>
-            <label className="font-medium text-gray-700">Date of Birth:</label>
-            {isEditing ? (
-              <input
-                type="date"
-                name="dateOfBirth"
-                value={profile.dateOfBirth}
-                onChange={handleInputChange}
-                className="ml-2 px-2 py-1 border rounded-lg"
-              />
-            ) : (
-              <span className="ml-2 text-gray-900">{profile.dateOfBirth}</span>
-            )}
-          </div>
-        )}
+        <div>
+          <label className="font-medium text-gray-700">Date of Birth:</label>
+          {isEditing ? (
+            <input
+              type="date"
+              name="dateOfBirth"
+              value={profile.dateOfBirth}
+              onChange={handleInputChange}
+              className="ml-2 px-2 py-1 border rounded-lg"
+            />
+          ) : (
+            <span className="ml-2 text-gray-900">{profile.dateOfBirth}</span>
+          )}
+        </div>
 
         {/* Gender */}
-        {role === 'Super Admin' && (
-          <div>
-            <label className="font-medium text-gray-700">Gender:</label>
-            {isEditing ? (
-              <select
-                name="gender"
-                value={profile.gender}
-                onChange={handleInputChange}
-                className="ml-2 px-2 py-1 border rounded-lg"
-              >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            ) : (
-              <span className="ml-2 text-gray-900">{profile.gender}</span>
-            )}
-          </div>
-        )}
+        <div>
+          <label className="font-medium text-gray-700">Gender:</label>
+          {isEditing ? (
+            <select
+              name="gender"
+              value={profile.gender}
+              onChange={handleInputChange}
+              className="ml-2 px-2 py-1 border rounded-lg"
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          ) : (
+            <span className="ml-2 text-gray-900">{profile.gender}</span>
+          )}
+        </div>
 
         {/* Additional Info */}
-        {role === 'Super Admin' && (
-          <div>
-            <label className="font-medium text-gray-700">Additional Info:</label>
-            {isEditing ? (
-              <textarea
-                name="additionalInfo"
-                value={profile.additionalInfo}
-                onChange={handleInputChange}
-                className="ml-2 px-2 py-1 border rounded-lg w-full"
-              />
-            ) : (
-              <span className="ml-2 text-gray-900">{profile.additionalInfo}</span>
-            )}
-          </div>
-        )}
+        <div>
+          <label className="font-medium text-gray-700">Additional Info:</label>
+          {isEditing ? (
+            <textarea
+              name="additionalInfo"
+              value={profile.additionalInfo}
+              onChange={handleInputChange}
+              className="ml-2 px-2 py-1 border rounded-lg w-full"
+            />
+          ) : (
+            <span className="ml-2 text-gray-900">{profile.additionalInfo}</span>
+          )}
+        </div>
       </div>
 
       {/* Edit/Save Buttons */}
-      {role === 'Super Admin' && (
-        <div className="mt-6">
-          {isEditing ? (
-            <button
-              onClick={handleSave}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-            >
-              Save
-            </button>
-          ) : (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-            >
-              Edit Profile
-            </button>
-          )}
-        </div>
-      )}
+      <div className="mt-6">
+        {isEditing ? (
+          <button
+            onClick={handleSave}
+            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          >
+            Edit Profile
+          </button>
+        )}
+      </div>
     </div>
   );
 }
