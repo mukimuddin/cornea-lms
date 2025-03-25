@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://your-backend-service.onrender.com', // Replace with your Render backend URL
+        target: process.env.VITE_BACKEND_URL, // Use environment variable
         changeOrigin: true,
       },
     },
