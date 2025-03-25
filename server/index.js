@@ -1,9 +1,11 @@
 const express = require('express');
 const connectDB = require('./db.js');
 const itemModel = require('./models/item.js');
-const StudentModel = require('./models/student.js'); // Import StudentModel
+const StudentModel = require('./models/student.js');
 const cors = require('cors');
 const path = require('path');
+
+require('dotenv').config(); // Load environment variables
 
 const app = express();
 app.use(cors());
@@ -16,7 +18,7 @@ connectDB();
 app.use(express.static(path.join(__dirname, '../dist')));
 
 // API Routes
-app.get('/', async (req, res) => {
+app.get('/api/items', async (req, res) => {
   try {
     const response = await itemModel.find();
     res.json({ items: response });
@@ -26,7 +28,7 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.post('/students', async (req, res) => {
+app.post('/api/students', async (req, res) => {
   try {
     const newStudent = new StudentModel(req.body);
     const savedStudent = await newStudent.save();
