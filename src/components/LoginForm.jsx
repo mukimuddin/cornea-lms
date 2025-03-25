@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa'; // Import FontAwesome icon
+import { FaArrowLeft } from 'react-icons/fa';
+import Notification from './Notification';
 
 function LoginForm({ role, credentials, redirectPath }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [notification, setNotification] = useState('');
+  const [notification, setNotification] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -14,21 +14,20 @@ function LoginForm({ role, credentials, redirectPath }) {
     e.preventDefault();
 
     if (!username || !password) {
-      setError('Both fields are required.');
+      setNotification({ message: 'Both fields are required.', type: 'error' });
       return;
     }
 
     setLoading(true);
-    setError('');
     setTimeout(() => {
       if (username === credentials.username && password === credentials.password) {
-        setNotification(`${role} Login Successful! Redirecting...`);
+        setNotification({ message: `${role} Login Successful!`, type: 'success' });
         localStorage.setItem('role', role);
         setTimeout(() => {
           navigate(redirectPath);
-        }, 2000);
+        }, 1000); // Wait for notification to disappear
       } else {
-        setError('Invalid credentials. Please try again.');
+        setNotification({ message: 'Invalid credentials. Please try again.', type: 'error' });
       }
       setLoading(false);
     }, 1000);
@@ -57,18 +56,6 @@ function LoginForm({ role, credentials, redirectPath }) {
             {role} Login
           </h2>
         </div>
-
-        {/* Notifications */}
-        {notification && (
-          <p className="text-green-500 mb-4" role="alert">
-            {notification}
-          </p>
-        )}
-        {error && (
-          <p className="text-red-500 mb-4" role="alert">
-            {error}
-          </p>
-        )}
 
         {/* Username Field */}
         <div className="mb-4">
@@ -127,6 +114,15 @@ function LoginForm({ role, credentials, redirectPath }) {
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
+
+      {/* Notification */}
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </div>
   );
 }
