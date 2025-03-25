@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './', // Ensure assets are resolved correctly
+  base: '/', // Use '/' for Vercel deployments
   plugins: [react()],
   server: {
     proxy: {
