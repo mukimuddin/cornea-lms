@@ -16,7 +16,10 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
-app.use(express.json());
+
+// Increase payload size limit
+app.use(express.json({ limit: '10mb' })); // Adjust the limit as needed
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Connect to MongoDB
 connectDB();
@@ -36,6 +39,14 @@ app.post('/api/students', [
   body('name').notEmpty().withMessage('Name is required'),
   body('email').isEmail().withMessage('Invalid email'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+  body('class').notEmpty().withMessage('Class is required'),
+  body('gender').notEmpty().withMessage('Gender is required'),
+  body('guardianContact').notEmpty().withMessage('Guardian contact is required'),
+  body('currentAddress').notEmpty().withMessage('Current address is required'),
+  body('courseFee').isNumeric().withMessage('Course fee must be a number'),
+  body('paymentStatus').notEmpty().withMessage('Payment status is required'),
+  body('paymentMethod').notEmpty().withMessage('Payment method is required'),
+  body('username').notEmpty().withMessage('Username is required'),
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

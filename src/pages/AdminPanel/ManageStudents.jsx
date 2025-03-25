@@ -61,6 +61,12 @@ function ManageStudents() {
   const handleProfilePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Check file size (e.g., limit to 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        alert('File size exceeds 2MB. Please upload a smaller file.');
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = () => {
         setNewStudent((prev) => ({ ...prev, profilePhoto: reader.result }));
@@ -125,7 +131,12 @@ function ManageStudents() {
       alert('Student added successfully!');
     } catch (error) {
       console.error('Error adding student:', error.response || error.message);
-      alert(`Failed to add student: ${error.response?.data?.error || error.message}`);
+      if (error.response?.data?.errors) {
+        const validationErrors = error.response.data.errors.map((err) => err.msg).join(', ');
+        alert(`Failed to add student: ${validationErrors}`);
+      } else {
+        alert(`Failed to add student: ${error.response?.data?.error || error.message}`);
+      }
     }
   };
 

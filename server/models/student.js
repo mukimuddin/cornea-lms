@@ -13,23 +13,7 @@ const studentSchema = new mongoose.Schema({
   paymentStatus: { type: String, required: true },
   paymentMethod: { type: String, required: true },
   username: { type: String, required: true, unique: true },
-  fatherName: { type: String, required: true },
-  motherName: { type: String, required: true },
-  dateOfBirth: { type: Date, required: true },
-  bloodGroup: { type: String },
-  nationality: { type: String },
-  religion: { type: String },
-  department: { type: String },
-  previousSchool: { type: String },
-  currentSchool: { type: String },
-  lastExamResults: { type: String },
-  studentContact: { type: String },
-  permanentAddress: { type: String },
-  discount: { type: Number },
-  profilePhoto: { type: String },
-  guardianOccupation: { type: String },
-  specialNeeds: { type: String },
-  hostelFacility: { type: String },
+  // ...other fields...
 });
 
 studentSchema.pre('save', async function (next) {
