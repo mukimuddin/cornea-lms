@@ -12,7 +12,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173'], // Ensure this matches your frontend's URL
+  origin: ['https://cornea-lms-1.onrender.com'], // Add your deployed frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
