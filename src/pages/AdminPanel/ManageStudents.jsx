@@ -39,7 +39,7 @@ function ManageStudents() {
     // Fetch students from the real-time database
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/students');
+        const response = await axios.get('https://your-backend-service.onrender.com/students'); // Update URL
         setStudents(response.data);
       } catch (error) {
         console.error('Error fetching students:', error);
@@ -98,7 +98,7 @@ function ManageStudents() {
 
     try {
       console.log('Sending data to API:', studentWithCredentials); // Debugging log
-      const response = await axios.post('http://localhost:5000/students', studentWithCredentials);
+      const response = await axios.post('https://your-backend-service.onrender.com/students', studentWithCredentials); // Update URL
       console.log('API Response:', response.data); // Debugging log
       setStudents((prev) => [...prev, response.data]);
       setNewStudent({

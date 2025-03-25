@@ -1,25 +1,34 @@
-// mongodb+srv://mukim_uddin:<db_password>@cluster0.mesxr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-
 const express = require('express');
 const connectDB = require('./db.js');
 const itemModel = require('./models/item.js');
 const StudentModel = require('./models/student.js'); // Import StudentModel
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Connect to MongoDB
 connectDB();
 
-app.get("/", async (req, res) => {
-  const response = await itemModel.find();
-  return res.json({ items: response });
+// Serve static files from the dist folder
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// API Routes
+app.get('/', async (req, res) => {
+  try {
+    const response = await itemModel.find();
+    res.json({ items: response });
+  } catch (error) {
+    console.error('Error fetching items:', error);
+    res.status(500).json({ error: 'Failed to fetch items' });
+  }
 });
 
 app.post('/students', async (req, res) => {
   try {
-    const newStudent = new StudentModel(req.body); // Use StudentModel
+    const newStudent = new StudentModel(req.body);
     const savedStudent = await newStudent.save();
     res.status(201).json(savedStudent);
   } catch (error) {
@@ -28,6 +37,13 @@ app.post('/students', async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log('Server is running on port 5000');
+// Fallback to index.html for React Router
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
+// Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
