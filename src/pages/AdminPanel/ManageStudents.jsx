@@ -40,7 +40,7 @@ function ManageStudents() {
     const fetchStudents = async () => {
       try {
         const response = await axios.get('/api/students'); // Correct API endpoint
-        setStudents(response.data);
+        setStudents(response.data); // Ensure the backend returns the correct data
       } catch (error) {
         console.error('Error fetching students:', error);
       }

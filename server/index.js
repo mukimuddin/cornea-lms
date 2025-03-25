@@ -42,7 +42,7 @@ app.post('/api/students', async (req, res) => {
 app.get('/api/students', async (req, res) => {
   try {
     const students = await StudentModel.find(); // Fetch all students
-    res.json(students);
+    res.json(students); // Ensure the response is in JSON format
   } catch (error) {
     console.error('Error fetching students:', error);
     res.status(500).json({ error: 'Failed to fetch students' });
