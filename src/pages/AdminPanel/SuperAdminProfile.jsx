@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import Profile from '../../components/Profile';
 
 function SuperAdminProfile() {
-  const [profile, setProfile] = useState({
+  const profileData = {
     name: 'Super Admin',
     email: 'superadmin@example.com',
     role: 'Super Admin',
@@ -9,173 +10,23 @@ function SuperAdminProfile() {
     address: '123 Main Street, City, Country',
     dateOfBirth: '1980-01-01',
     gender: 'Male',
+    department: 'Administration',
+    joiningDate: '2010-01-01',
+    emergencyContact: '987-654-3210',
+    bloodGroup: 'O+',
+    nationality: 'American',
+    languages: 'English, Spanish',
+    hobbies: 'Reading, Traveling, Management',
+    achievements: 'Employee of the Year (2015), Best Administrator Award (2020)',
     additionalInfo: 'This is additional information about the Super Admin.',
-  });
-  const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    const storedRole = localStorage.getItem('role');
-    if (storedRole !== 'Admin') {
-      console.warn('Accessing as a non-superadmin user.');
-    }
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
+    profilePicture: null,
   };
 
-  const handleSave = () => {
-    console.log('Profile saved:', profile);
-    setIsEditing(false);
+  const handleSave = (updatedProfile) => {
+    console.log('Updated Profile:', updatedProfile);
   };
 
-  return (
-    <div className="bg-white shadow-md rounded-lg p-6">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Super Admin Profile</h1>
-
-      <div className="space-y-4">
-        {/* Name */}
-        <div>
-          <label className="font-medium text-gray-700">Name:</label>
-          {isEditing ? (
-            <input
-              type="text"
-              name="name"
-              value={profile.name}
-              onChange={handleInputChange}
-              className="ml-2 px-2 py-1 border rounded-lg"
-            />
-          ) : (
-            <span className="ml-2 text-gray-900">{profile.name}</span>
-          )}
-        </div>
-
-        {/* Email */}
-        <div>
-          <label className="font-medium text-gray-700">Email:</label>
-          {isEditing ? (
-            <input
-              type="email"
-              name="email"
-              value={profile.email}
-              onChange={handleInputChange}
-              className="ml-2 px-2 py-1 border rounded-lg"
-            />
-          ) : (
-            <span className="ml-2 text-gray-900">{profile.email}</span>
-          )}
-        </div>
-
-        {/* Role */}
-        <div>
-          <label className="font-medium text-gray-700">Role:</label>
-          <span className="ml-2 text-gray-900">{profile.role}</span>
-        </div>
-
-        {/* Contact */}
-        <div>
-          <label className="font-medium text-gray-700">Contact:</label>
-          {isEditing ? (
-            <input
-              type="text"
-              name="contact"
-              value={profile.contact}
-              onChange={handleInputChange}
-              className="ml-2 px-2 py-1 border rounded-lg"
-            />
-          ) : (
-            <span className="ml-2 text-gray-900">{profile.contact}</span>
-          )}
-        </div>
-
-        {/* Address */}
-        <div>
-          <label className="font-medium text-gray-700">Address:</label>
-          {isEditing ? (
-            <input
-              type="text"
-              name="address"
-              value={profile.address}
-              onChange={handleInputChange}
-              className="ml-2 px-2 py-1 border rounded-lg"
-            />
-          ) : (
-            <span className="ml-2 text-gray-900">{profile.address}</span>
-          )}
-        </div>
-
-        {/* Date of Birth */}
-        <div>
-          <label className="font-medium text-gray-700">Date of Birth:</label>
-          {isEditing ? (
-            <input
-              type="date"
-              name="dateOfBirth"
-              value={profile.dateOfBirth}
-              onChange={handleInputChange}
-              className="ml-2 px-2 py-1 border rounded-lg"
-            />
-          ) : (
-            <span className="ml-2 text-gray-900">{profile.dateOfBirth}</span>
-          )}
-        </div>
-
-        {/* Gender */}
-        <div>
-          <label className="font-medium text-gray-700">Gender:</label>
-          {isEditing ? (
-            <select
-              name="gender"
-              value={profile.gender}
-              onChange={handleInputChange}
-              className="ml-2 px-2 py-1 border rounded-lg"
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          ) : (
-            <span className="ml-2 text-gray-900">{profile.gender}</span>
-          )}
-        </div>
-
-        {/* Additional Info */}
-        <div>
-          <label className="font-medium text-gray-700">Additional Info:</label>
-          {isEditing ? (
-            <textarea
-              name="additionalInfo"
-              value={profile.additionalInfo}
-              onChange={handleInputChange}
-              className="ml-2 px-2 py-1 border rounded-lg w-full"
-            />
-          ) : (
-            <span className="ml-2 text-gray-900">{profile.additionalInfo}</span>
-          )}
-        </div>
-      </div>
-
-      {/* Edit/Save Buttons */}
-      <div className="mt-6">
-        {isEditing ? (
-          <button
-            onClick={handleSave}
-            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-          >
-            Save
-          </button>
-        ) : (
-          <button
-            onClick={() => setIsEditing(true)}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-          >
-            Edit Profile
-          </button>
-        )}
-      </div>
-    </div>
-  );
+  return <Profile profileData={profileData} isEditable={true} onSave={handleSave} />;
 }
 
 export default SuperAdminProfile;

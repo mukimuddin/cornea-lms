@@ -2,16 +2,10 @@ import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 
 function StudentDashboard() {
-  const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false); // State for toggling sidebar
   const [notification, setNotification] = useState({ message: '', type: '', visible: false });
   const sidebarRef = useRef(null);
   const navigate = useNavigate();
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark', !darkMode);
-  };
 
   const handleLogout = () => {
     setNotification({ message: 'Logout successful!', type: 'success', visible: true });
@@ -39,7 +33,7 @@ function StudentDashboard() {
   }, [sidebarOpen]);
 
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900 relative">
+    <div className="flex h-screen bg-gray-100 relative">
       {/* Notification */}
       {notification.message && (
         <div
@@ -54,7 +48,7 @@ function StudentDashboard() {
       {/* Sidebar */}
       <aside
         ref={sidebarRef}
-        className={`fixed md:static top-0 left-0 z-40 w-64 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-gray-100 shadow-md p-4 transform ${
+        className={`fixed md:static top-0 left-0 z-40 w-64 bg-white/90 text-gray-800 shadow-md p-4 transform ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 md:translate-x-0`}
       >
@@ -82,12 +76,6 @@ function StudentDashboard() {
             Chat
           </Link>
         </nav>
-        <button
-          onClick={toggleDarkMode}
-          className="mt-6 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 text-sm md:text-base"
-        >
-          Toggle {darkMode ? 'Light' : 'Dark'} Mode
-        </button>
         <button
           onClick={handleLogout}
           className="mt-4 w-full bg-gray-700 text-white py-2 rounded-lg hover:bg-gray-800 text-sm md:text-base"

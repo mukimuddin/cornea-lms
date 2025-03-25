@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import React from 'react';
+import Profile from '../../components/Profile';
 
-function Profile() {
-  const profile = {
+function StudentProfile() {
+  const profileData = {
     name: 'John Doe',
     email: 'johndoe@example.com',
+    role: 'Student',
     phone: '123-456-7890',
     address: '123 Main Street, Springfield, USA',
     dob: '1995-05-15',
@@ -29,23 +31,14 @@ function Profile() {
     scholarship: 'Merit-Based Scholarship',
     hostelRoom: 'Room 101, Block A',
     transport: 'Bus Route 5',
+    profilePicture: null,
   };
 
-  return (
-    <div className="bg-white shadow-md rounded-lg p-4 md:p-6">
-      <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">Student Profile</h1>
-      <div className="space-y-4">
-        {Object.entries(profile).map(([key, value]) => (
-          <div key={key} className="flex flex-col md:flex-row items-start">
-            <span className="w-full md:w-48 font-medium text-gray-700 capitalize text-sm md:text-base">
-              {key.replace(/([A-Z])/g, ' $1')}:
-            </span>
-            <span className="text-gray-900 text-sm md:text-base">{value}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  const handleSave = (updatedProfile) => {
+    console.log('Updated Profile:', updatedProfile);
+  };
+
+  return <Profile profileData={profileData} isEditable={true} onSave={handleSave} />;
 }
 
-export default Profile;
+export default StudentProfile;

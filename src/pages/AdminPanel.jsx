@@ -48,11 +48,11 @@ function AdminPanel() {
           <Link to="/admin-panel/settings" className="block hover:text-red-500">
             Settings
           </Link>
-          <Link
-            to="/admin-panel/manage-admins"
-            className="block hover:text-red-500"
-          >
+          <Link to="/admin-panel/manage-admins" className="block hover:text-red-500">
             Manage Admins
+          </Link>
+          <Link to="/admin-panel/admin-profile" className="block hover:text-red-500">
+            Admin Profile
           </Link>
           <Link to="/admin-panel/super-admin-profile" className="block hover:text-red-500">
             Super Admin Profile

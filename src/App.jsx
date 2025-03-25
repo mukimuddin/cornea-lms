@@ -8,13 +8,14 @@ import Homework from './pages/StudentDashboard/Homework.jsx';
 import Results from './pages/StudentDashboard/Results.jsx';
 import Payments from './pages/StudentDashboard/Payments.jsx';
 import Notifications from './pages/StudentDashboard/Notifications.jsx';
-import Profile from './pages/StudentDashboard/Profile.jsx';
+import StudentProfile from './pages/StudentDashboard/StudentProfile.jsx'; // Corrected import
 import StudentLogin from './pages/StudentLogin.jsx';
 import Chat from './pages/Chat.jsx';
 import TeacherDashboard from './pages/TeacherDashboard';
 import TeacherLogin from './pages/TeacherLogin.jsx';
 import TeacherDailyRoutine from './pages/TeacherDashboard/DailyRoutine.jsx';
 import SubmitResults from './pages/TeacherDashboard/SubmitResults.jsx';
+import TeacherProfile from './pages/TeacherDashboard/TeacherProfile.jsx';
 import ControllerPanel from './pages/ControllerPanel';
 import Dashboard from './pages/AdminPanel/Dashboard';
 import ManageStudents from './pages/AdminPanel/ManageStudents';
@@ -25,6 +26,7 @@ import Settings from './pages/AdminPanel/Settings';
 import ManageAdmins from './pages/AdminPanel/ManageAdmins';
 import AdminLogin from './pages/AdminLogin';
 import SuperAdminProfile from './pages/AdminPanel/SuperAdminProfile';
+import AdminProfile from './pages/AdminPanel/AdminProfile';
 import SuperAdminSetup from './pages/SuperAdminSetup';
 import { useEffect } from 'react';
 
@@ -51,8 +53,8 @@ function App() {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/super-admin-setup" element={<SuperAdminSetup />} />
         <Route path="/student-dashboard/*" element={<StudentDashboard />}>
-          <Route index element={<Profile />} />
-          <Route path="profile" element={<Profile />} />
+          <Route index element={<StudentProfile />} />
+          <Route path="profile" element={<StudentProfile />} />
           <Route path="daily-routine" element={<DailyRoutine />} />
           <Route path="homework" element={<Homework />} />
           <Route path="results" element={<Results />} />
@@ -68,12 +70,14 @@ function App() {
           <Route path="reports" element={<Reports />} />
           <Route path="settings" element={<Settings />} />
           <Route path="super-admin-profile" element={<SuperAdminProfile />} />
+          <Route path="admin-profile" element={<AdminProfile />} />
         </Route>
         <Route path="/controller-panel/*" element={<ControllerPanel />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/teacher-dashboard/*" element={<TeacherDashboard />}>
           <Route path="daily-routine" element={<TeacherDailyRoutine />} />
           <Route path="submit-results" element={<SubmitResults />} />
+          <Route path="teacher-profile" element={<TeacherProfile />} />
         </Route>
       </Routes>
     </Router>
