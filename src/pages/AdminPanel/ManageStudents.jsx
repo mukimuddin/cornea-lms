@@ -31,8 +31,8 @@ function ManageStudents() {
     guardianOccupation: '',
     specialNeeds: '',
     hostelFacility: '',
-    username: '',
-    password: '',
+    username: '', // Add username field
+    password: '', // Add password field
   });
 
   useEffect(() => {
@@ -69,12 +69,6 @@ function ManageStudents() {
     }
   };
 
-  const generateUsernameAndPassword = (name) => {
-    const username = name.toLowerCase().replace(/\s+/g, '') + Math.floor(1000 + Math.random() * 9000);
-    const password = Math.random().toString(36).slice(-8);
-    return { username, password };
-  };
-
   const handleAddStudent = async () => {
     if (
       !newStudent.name ||
@@ -87,18 +81,17 @@ function ManageStudents() {
       !newStudent.currentAddress ||
       !newStudent.courseFee ||
       !newStudent.paymentStatus ||
-      !newStudent.paymentMethod
+      !newStudent.paymentMethod ||
+      !newStudent.username || // Ensure username is provided
+      !newStudent.password // Ensure password is provided
     ) {
       alert('Please fill in all required fields.');
       return;
     }
 
-    const { username, password } = generateUsernameAndPassword(newStudent.name);
-    const studentWithCredentials = { ...newStudent, username, password };
-
     try {
-      console.log('Sending data to API:', studentWithCredentials); // Debugging log
-      const response = await axios.post('https://your-backend-service.onrender.com/students', studentWithCredentials); // Update URL
+      console.log('Sending data to API:', newStudent); // Debugging log
+      const response = await axios.post('https://your-backend-service.onrender.com/students', newStudent); // Update URL
       console.log('API Response:', response.data); // Debugging log
       setStudents((prev) => [...prev, response.data]);
       setNewStudent({
@@ -131,7 +124,7 @@ function ManageStudents() {
         username: '',
         password: '',
       });
-      alert(`Student added successfully! Username: ${username}, Password: ${password}`);
+      alert('Student added successfully!');
     } catch (error) {
       console.error('Error adding student:', error); // Debugging log
       alert('Failed to add student. Please try again.');
@@ -315,6 +308,22 @@ function ManageStudents() {
             <option value="Nagad">Nagad</option>
             <option value="Bank Transfer">Bank Transfer</option>
           </select>
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={newStudent.username}
+            onChange={handleInputChange}
+            className="w-full px-4 py-2 border rounded-lg"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={newStudent.password}
+            onChange={handleInputChange}
+            className="w-full px-4 py-2 border rounded-lg"
+          />
           <input
             type="file"
             onChange={handleProfilePhotoChange}
