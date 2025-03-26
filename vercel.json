@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://your-backend-service.onrender.com/api/$1" },
+    { "source": "/api/(.*)", "destination": "https://cornea-lms-1.onrender.com/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
