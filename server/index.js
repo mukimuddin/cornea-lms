@@ -12,7 +12,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://cornea-lms-1.onrender.com'], // Allow both local and production URLs
+  origin: ['http://localhost:5173', 'https://cornea-lms.vercel.app'], // Add your Railway backend URL here after deployment
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true, // Allow cookies and credentials
 }));
@@ -57,6 +57,11 @@ app.post('/api/students', async (req, res) => {
   }
 });
 
+// Root route to confirm the server is running
+app.get('/', (req, res) => {
+  res.send('Backend is running. Use the API endpoints to interact with the server.');
+});
+
 // Catch-all route for undefined API endpoints
 app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'API endpoint not found' });
@@ -80,3 +85,10 @@ if (process.env.VERCEL) {
     console.log(`Server is running on port ${PORT}`);
   });
 }
+// filepath: /workspaces/cornea-lms/server/index.js
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => {
+        console.error('MongoDB Connection Error:', err.message);
+        process.exit(1);
+    });

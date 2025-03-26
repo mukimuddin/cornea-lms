@@ -27,7 +27,7 @@ function ManageStudents() {
         setStudents(response.data);
       } catch (err) {
         console.error('Error fetching students:', err);
-        setError('Failed to load students.');
+        setError('Failed to load students. Please try again later.');
       }
     };
     loadStudents();
@@ -63,7 +63,7 @@ function ManageStudents() {
       setError('');
     } catch (err) {
       console.error('Error adding student:', err);
-      setError('Failed to add student.');
+      setError('Failed to add student. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -175,13 +175,17 @@ function ManageStudents() {
       </div>
       <div>
         <h2 className="text-xl font-bold mb-4">Student List</h2>
-        <ul>
-          {students.map((student) => (
-            <li key={student._id} className="mb-2">
-              {student.name} - {student.email}
-            </li>
-          ))}
-        </ul>
+        {students.length === 0 ? (
+          <p>No students found.</p>
+        ) : (
+          <ul>
+            {students.map((student) => (
+              <li key={student._id} className="mb-2">
+                {student.name} - {student.email}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
