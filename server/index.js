@@ -14,7 +14,7 @@ const app = express();
 app.use(cors({
   origin: ['http://localhost:5173', 'https://cornea-lms-1.onrender.com'], // Allow both local and production URLs
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
+  credentials: true, // Allow cookies and credentials
 }));
 
 // Increase payload size limit
