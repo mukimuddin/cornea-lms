@@ -28,6 +28,7 @@ if (!process.env.MONGO_URI || typeof process.env.MONGO_URI !== 'string') {
     process.exit(1);
 }
 
+// Debug MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => {
@@ -38,7 +39,9 @@ mongoose.connect(process.env.MONGO_URI)
 // API Routes
 app.get('/api/students', async (req, res) => {
   try {
+    console.log('Fetching students...');
     const students = await StudentModel.find(); // Ensure StudentModel is correctly imported
+    console.log('Students fetched:', students);
     res.json(students); // Send JSON response
   } catch (error) {
     console.error('Error fetching students:', error);
@@ -48,8 +51,10 @@ app.get('/api/students', async (req, res) => {
 
 app.post('/api/students', async (req, res) => {
   try {
+    console.log('Adding a new student:', req.body);
     const newStudent = new StudentModel(req.body);
     const savedStudent = await newStudent.save();
+    console.log('Student added:', savedStudent);
     res.status(201).json(savedStudent);
   } catch (error) {
     console.error('Error saving student:', error);
