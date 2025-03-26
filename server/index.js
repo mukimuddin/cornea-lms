@@ -28,7 +28,7 @@ if (!process.env.MONGO_URI || typeof process.env.MONGO_URI !== 'string') {
     process.exit(1);
 }
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => {
         console.error('MongoDB Connection Error:', err.message);
@@ -46,23 +46,7 @@ app.get('/api/students', async (req, res) => {
   }
 });
 
-app.post('/api/students', [
-  body('name').notEmpty().withMessage('Name is required'),
-  body('email').isEmail().withMessage('Invalid email'),
-  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-  body('class').notEmpty().withMessage('Class is required'),
-  body('gender').notEmpty().withMessage('Gender is required'),
-  body('guardianContact').notEmpty().withMessage('Guardian contact is required'),
-  body('currentAddress').notEmpty().withMessage('Current address is required'),
-  body('courseFee').isNumeric().withMessage('Course fee must be a number'),
-  body('paymentStatus').notEmpty().withMessage('Payment status is required'),
-  body('paymentMethod').notEmpty().withMessage('Payment method is required'),
-  body('username').notEmpty().withMessage('Username is required'),
-], async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+app.post('/api/students', async (req, res) => {
   try {
     const newStudent = new StudentModel(req.body);
     const savedStudent = await newStudent.save();
@@ -88,6 +72,11 @@ app.get('*', (req, res) => {
 
 // Start the server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
+if (process.env.VERCEL) {
+  module.exports = app; // Export the app for Vercel
+} else {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
