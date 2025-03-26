@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchStudents, addStudent } from '../../utils/api';
 
 function ManageStudents() {
-  const [students, setStudents] = useState([]); // Keep only one declaration of students
+  const [students, setStudents] = useState([]); // State to store students
   const [filters, setFilters] = useState({ class: '', gender: '' });
   const [newStudent, setNewStudent] = useState({
     name: '',
@@ -39,7 +39,8 @@ function ManageStudents() {
     const loadStudents = async () => {
       try {
         const response = await fetchStudents();
-        setStudents(response.data);
+        console.log('Fetched Students:', response.data); // Debugging: Log fetched data
+        setStudents(response.data); // Update state with fetched students
       } catch (error) {
         console.error('Error fetching students:', error.response || error.message);
         alert(`Failed to load students: ${error.response?.data?.error || error.message}`);
@@ -204,16 +205,27 @@ function ManageStudents() {
               </tr>
             </thead>
             <tbody>
-              {filteredStudents.map((student) => (
-                <tr key={student.id} className="hover:bg-gray-50">
-                  <td className="border border-gray-300 px-4 py-2 text-gray-800">{student.name}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-gray-800">{student.gender}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-gray-800">{student.class}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-gray-800">
-                    {student.guardianContact}
+              {filteredStudents.length > 0 ? (
+                filteredStudents.map((student) => (
+                  <tr key={student._id} className="hover:bg-gray-50">
+                    <td className="border border-gray-300 px-4 py-2 text-gray-800">{student.name}</td>
+                    <td className="border border-gray-300 px-4 py-2 text-gray-800">{student.gender}</td>
+                    <td className="border border-gray-300 px-4 py-2 text-gray-800">{student.class}</td>
+                    <td className="border border-gray-300 px-4 py-2 text-gray-800">
+                      {student.guardianContact}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="4"
+                    className="border border-gray-300 px-4 py-2 text-center text-gray-500"
+                  >
+                    No students found.
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
