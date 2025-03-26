@@ -12,7 +12,8 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173'], // Allow local frontend
+  origin: ['http://localhost:5173', 'https://cornea-lms-1.onrender.com'], // Allow both local and production URLs
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
 

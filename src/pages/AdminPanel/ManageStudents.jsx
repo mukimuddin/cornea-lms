@@ -348,12 +348,22 @@ function ManageStudents() {
           />
           <form>
             <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={newStudent.username}
+              onChange={handleInputChange}
+              className="hidden" // Hidden username field for accessibility
+              autoComplete="username"
+            />
+            <input
               type="password"
               name="password"
               placeholder="Password"
               value={newStudent.password}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-lg"
+              autoComplete="new-password"
             />
           </form>
           <input
