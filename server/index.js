@@ -12,7 +12,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://cornea-lms.vercel.app'], // Add your Railway backend URL here after deployment
+  origin: ['http://localhost:5173', 'https://cornea-lms.vercel.app'], // Add your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true, // Allow cookies and credentials
 }));
