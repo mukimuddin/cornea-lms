@@ -35,14 +35,14 @@ function App() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await fetch('http://localhost:5000/');
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/students`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json(); // Ensure the response is JSON
+        const data = await response.json();
         console.log(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error.message);
       }
     };
     fetchdata();

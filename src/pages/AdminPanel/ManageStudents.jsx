@@ -39,11 +39,10 @@ function ManageStudents() {
     const loadStudents = async () => {
       try {
         const response = await fetchStudents();
-        console.log('Fetched Students:', response.data); // Debugging: Log fetched data
-        setStudents(response.data); // Update state with fetched students
+        console.log('Fetched Students:', response.data); // Log the response
+        setStudents(response.data); // Update state with fetched data
       } catch (error) {
-        console.error('Error fetching students:', error.response || error.message);
-        alert(`Failed to load students: ${error.response?.data?.error || error.message}`);
+        console.error('Error fetching students:', error);
       }
     };
     loadStudents();
@@ -234,7 +233,7 @@ function ManageStudents() {
       {/* Add New Student */}
       <div>
         <h2 className="text-xl font-bold mb-4 text-gray-800">Add New Student</h2>
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             type="text"
             name="name"
@@ -347,20 +346,22 @@ function ManageStudents() {
             onChange={handleInputChange}
             className="w-full px-4 py-2 border rounded-lg"
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={newStudent.password}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 border rounded-lg"
-          />
+          <form>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={newStudent.password}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+          </form>
           <input
             type="file"
             onChange={handleProfilePhotoChange}
             className="w-full px-4 py-2 border rounded-lg"
           />
-        </form>
+        </div>
         <button
           onClick={handleAddStudent}
           className="mt-4 bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600"

@@ -12,8 +12,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['https://cornea-lms-1.onrender.com'], // Add your deployed frontend URL local and production URLs
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: ['http://localhost:5173'], // Allow local frontend
   credentials: true,
 }));
 
@@ -27,8 +26,8 @@ connectDB();
 // API Routes
 app.get('/api/students', async (req, res) => {
   try {
-    const students = await StudentModel.find();
-    res.json(students); // Ensure this sends a JSON response
+    const students = await StudentModel.find(); // Ensure StudentModel is correctly imported
+    res.json(students); // Send JSON response
   } catch (error) {
     console.error('Error fetching students:', error);
     res.status(500).json({ error: 'Failed to fetch students' });

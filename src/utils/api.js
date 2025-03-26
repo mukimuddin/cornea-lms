@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`, // Dynamically use the correct backend URL
+  baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`, // Ensure correct base URL
   withCredentials: true,
 });
 
