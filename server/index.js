@@ -12,7 +12,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['https://cornea-lms-1.onrender.com'], // Add your deployed frontend URL
+  origin: ['https://cornea-lms-1.onrender.com'], // Add your deployed frontend URL local and production URLs
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
@@ -60,6 +60,11 @@ app.post('/api/students', [
     console.error('Error saving student:', error);
     res.status(500).json({ error: 'Failed to add student' });
   }
+});
+
+// Catch-all route for undefined API endpoints
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ error: 'API endpoint not found' });
 });
 
 // Serve static files from the dist folder

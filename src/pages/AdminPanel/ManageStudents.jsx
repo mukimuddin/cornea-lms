@@ -234,7 +234,7 @@ function ManageStudents() {
       {/* Add New Student */}
       <div>
         <h2 className="text-xl font-bold mb-4 text-gray-800">Add New Student</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             type="text"
             name="name"
@@ -360,7 +360,7 @@ function ManageStudents() {
             onChange={handleProfilePhotoChange}
             className="w-full px-4 py-2 border rounded-lg"
           />
-        </div>
+        </form>
         <button
           onClick={handleAddStudent}
           className="mt-4 bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600"
