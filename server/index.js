@@ -1,6 +1,6 @@
 console.log('Starting server...');
 const express = require('express');
-const connectDB = require('./db.js');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const { body, validationResult } = require('express-validator');
@@ -22,7 +22,18 @@ app.use(express.json({ limit: '10mb' })); // Adjust the limit as needed
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Connect to MongoDB
-connectDB();
+if (!process.env.MONGO_URI || typeof process.env.MONGO_URI !== 'string') {
+    console.error('Error: MONGO_URI is not defined or invalid in the .env file.');
+    console.error('Please ensure the .env file exists and contains the correct MongoDB connection string.');
+    process.exit(1);
+}
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => {
+        console.error('MongoDB Connection Error:', err.message);
+        process.exit(1);
+    });
 
 // API Routes
 app.get('/api/students', async (req, res) => {
