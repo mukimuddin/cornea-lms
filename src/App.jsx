@@ -36,7 +36,10 @@ function App() {
     const fetchdata = async () => {
       try {
         const response = await fetch('http://localhost:5000/');
-        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json(); // Ensure the response is JSON
         console.log(data);
       } catch (error) {
         console.error('Error fetching data:', error);
